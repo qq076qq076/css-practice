@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      background: #ffd17d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .face{
+        display: flex;
+    }
+
+    .eye {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 300px;
+      height: 300px;
+      background-color: white;
+      clip-path: ellipse(35% 15% at 49% 50%);
+      transition: 0.5s;
+    }
+
+    .face:hover .eye {
+      clip-path: ellipse(35% 0% at 49% 50%);
+    }
+
+    .pupil {
+      position: absolute;
+      border-radius: 50%;
+      background-color: black;
+      height: 50px;
+      width: 50px;
+      transition: .2s;
+    }
+  </style>
+  <body>
+    <div class="face">
+      <div class="block">
+        <div class="eye">
+          <div class="pupil"></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="eye">
+          <div class="pupil"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let pupil = document.querySelectorAll('.pupil');
+    function getRandomX(top){
+        let offsetX = Math.ceil(Math.random()*100);
+        let xWay = Math.round(Math.random()) * 2 -1;
+        let newTop = top + (offsetX * xWay);
+        if(newTop < 95){
+            newTop = top + offsetX;
+        }else if(newTop > 155){
+            newTop = top - offsetX;
+        }  
+        if(newTop > 95 && newTop< 155){
+            return newTop;
+        }else{
+            return getRandomX(top);
+        }
+    }
+    function getRandomY(left){
+        let offsetY = Math.ceil(Math.random()*100);
+        let yWay = Math.round(Math.random()) * 2 -1;
+        let newLeft = left + (offsetY * yWay);
+        if(newLeft < 95){
+            newLeft = left + offsetY;
+        }else if(newLeft > 155){
+            newLeft = left - offsetY;
+        }  
+        if(newLeft > 95 && newLeft< 155){
+            return newLeft;
+        }else{
+            return getRandomY(left);
+        }
+    }
+    setInterval(() => {
+        let top = parseInt(pupil[0].style.top) || 125;
+        let newTop = getRandomX(top);
+        let left = parseInt(pupil[0].style.left) || 125;
+        let newLeft = getRandomY(left)
+        pupil[0].style.top = newTop + 'px'
+        pupil[1].style.top = newTop + 'px'
+        pupil[0].style.left = newLeft+ 'px'
+        pupil[1].style.left = newLeft+ 'px'
+    }, 500);
+  </script>
+</html>
